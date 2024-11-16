@@ -26,7 +26,7 @@ app.use(router);
 app.component("v-icon", OhVueIcon);
 
 // Definindo a URL base da API
-app.config.globalProperties.$apiBaseURL = 'https://topsongs-api.onrender.com';
+app.config.globalProperties.$apiBaseURL = 'https://top-songs-api.vercel.app';
 
 // Iniciando a aplicação Vue na raiz do DOM
 app.mount("#app");
