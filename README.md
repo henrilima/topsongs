@@ -5,7 +5,7 @@
 - **Vue.js 3** - Framework JavaScript para construção de interfaces de usuário.
 - **JavaScript (ES6+)**
 - **HTML5** e **CSS3**
-- **API pública da Deezer** para buscar informações de músicas e artistas, como `GET https://topsongs-api.onrender.com/api` | **[TopSongs-API](https://github.com/henrilima/TopSongs-API)**.
+- **API pública da Deezer** para buscar informações de músicas e artistas, incluida em `GET https://top-songs-api.vercel.app/api` | **[TopSongs-API](https://github.com/henrilima/TopSongs-API)**.
 
 ## Funcionalidades
 - Classificação das 5 músicas preferidas de qualquer artista.
