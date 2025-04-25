@@ -31,7 +31,7 @@ import "aos/dist/aos.css";
 AOS.init();
 
 // Definindo a URL base da API
-app.config.globalProperties.$apiBaseURL = /* 'https://top-songs-api.vercel.app'*/ 'http://localhost:3000';
+app.config.globalProperties.$apiBaseURL = 'https://top-songs-api.vercel.app';
 
 // Iniciando a aplicação Vue na raiz do DOM
 app.mount("#app");
