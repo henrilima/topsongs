@@ -25,8 +25,13 @@ const app = createApp(App);
 app.use(router);
 app.component("v-icon", OhVueIcon);
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+AOS.init();
+
 // Definindo a URL base da API
-app.config.globalProperties.$apiBaseURL = 'https://top-songs-api.vercel.app';
+app.config.globalProperties.$apiBaseURL = /* 'https://top-songs-api.vercel.app'*/ 'http://localhost:3000';
 
 // Iniciando a aplicação Vue na raiz do DOM
 app.mount("#app");

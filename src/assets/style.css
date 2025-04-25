@@ -25,9 +25,10 @@ p {
 :root {
     --black: #101010;
     --white: #d9d9d9;
-    --active: #262038;
-    --blurple: #584cda;
-    --orange: #feb029;
+    --active: #382020;
+    --primary: rgb(194, 68, 68);
+    --secondary: rgb(178, 34, 34);
+    --shadow: 194, 68, 68;
     --lightgrey: #8f8f8f;
     --grey: #606060;
     --semidarkgrey: #282828;
@@ -54,10 +55,6 @@ body {
     font-weight: 800;
 }
 
-.emoji-orange {
-    color: var(--orange);
-}
-
 .emoji-grey {
     color: var(--lightgrey);
 }
@@ -77,6 +74,7 @@ p.main-text {
         var(--grey) 60%
     );
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -85,6 +83,7 @@ p.main-text-min {
 }
 
 form input,
+input,
 button {
     width: 100%;
     border: 1px solid var(--darkgrey);
@@ -103,13 +102,12 @@ button.cta-btn {
 }
 
 button.cta-btn:hover {
-    background-color: var(--blurple);
+    background-color: var(--secondary);
     cursor: pointer;
 }
 
 button.cta-btn.btn-not:hover {
-    background-color: var(--orange);
-    color: var(--black);
+    background-color: var(--active);
     cursor: pointer;
 }
 
@@ -143,16 +141,16 @@ button.cta-btn:disabled:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--blurple);
+    background-color: var(--primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--orange);
+    background-color: var(--primary);
 }
 
 form p.messages {
     width: 100%;
-    color: var(--orange);
+    color: var(--primary);
     font-size: 0.8rem;
     margin: 0 0 1.8rem 0;
     padding: 0.5rem 1rem;
