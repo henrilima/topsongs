@@ -4,7 +4,7 @@
       Suas músicas selecionadas
     </h2>
     <h2 v-else>
-      Você pode selecionar até 5 músicas de qualquer álbum para gerar o seu ranking de favoritos.
+      Escolha até 5 músicas de qualquer álbum para criar sua lista de favoritas. Pesquise o álbum ou clique nas capas para ver as músicas.
     </h2>
     <ul>
       <li v-for="song in selectedSongs" :key="song.id">

@@ -8,7 +8,7 @@
             <v-icon name="fa-home" scale="1" />
           </button>
           <div class="search-bar">
-            <input type="text" v-model="searchQuery" placeholder="Pesquisar álbuns e singles..."
+            <input type="text" v-model="searchQuery" placeholder="Pesquisar álbum..."
               @input="filterAlbums" />
             <div class="icon">
               <v-icon name="fa-search" scale="1" />
