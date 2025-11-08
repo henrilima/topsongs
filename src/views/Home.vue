@@ -16,35 +16,50 @@
           <button type="submit" class="cta-btn">Buscar artista</button>
         </form>
       </div>
+
       <div class="flex-column" v-if="artist">
-        <div :key="artist.id" data-aos="fade-left" class="flex-column artist-box" :class="{ 'fade-out': isFadingOut }"
-          @animationend="handleAnimationEnd">
-          <div class="disk" :style="{ backgroundImage: 'url(' + artist.icon + ')' }" :class="{ spin: isHover }"
-            @mouseover="handleHover(true)" @animationend="handleHover(false)">
+        <div
+          :key="artist.id"
+          data-aos="fade-left"
+          class="flex-column artist-box"
+          :class="{ 'fade-out': isFadingOut }"
+          @animationend="handleAnimationEnd"
+        >
+          <div
+            class="disk"
+            :style="{ backgroundImage: 'url(' + artist.icon + ')' }"
+            :class="{ spin: isHover }"
+            @mouseover="handleHover(true)"
+            @animationend="handleHover(false)"
+          >
             <div class="hole"></div>
             <div class="hole hole-m"></div>
           </div>
+
           <h2 class="artist-name">{{ artist.name }}</h2>
           <p class="question">É esse seu artista?</p>
           <div class="buttons">
-            <button class="cta-btn" v-if="artist" @click="getArtistData">
-              Sim
-            </button>
-            <button class="cta-btn btn-not" @click="notIsMyArtist">
-              Não
-            </button>
+            <button class="cta-btn" v-if="artist" @click="getArtistData">Sim</button>
+            <button class="cta-btn btn-not" @click="notIsMyArtist">Não</button>
           </div>
         </div>
       </div>
     </div>
-    <div>
+
+    <div class="images">
       <div class="flex-column">
         <h1 class="emphasize">Crie artes incríveis!</h1>
         <p><strong>Simples e rápido:</strong> selecione, organize e personalize seu canvas musical.</p>
-        <div class="flex-row">
-          <div style="opacity: 1;"><img :src="doja" alt="canva" width="320" data-aos="fade-right" data-aos-delay="200" style="border-radius: 8px;" draggable="false" /></div>
-        <div style="opacity: 0.6; margin-left: -120px;"><img :src="kali" alt="canva" width="300" data-aos="fade-right" data-aos-delay="600" style="border-radius: 8px;" draggable="false" /></div>
-        <div style="opacity: 0.2; margin-left: -120px;"><img :src="marina" alt="canva" width="280" data-aos="fade-right" data-aos-delay="1000" style="border-radius: 8px;" draggable="false" /></div>
+        <div class="flex-row image-stack">
+          <div style="opacity: 1">
+            <img :src="doja" alt="canva" width="320" data-aos="fade-right" data-aos-delay="1000" draggable="false" />
+          </div>
+          <div style="opacity: 0.6; margin-left: -100px">
+            <img :src="kali" alt="canva" width="300" data-aos="fade-right" data-aos-delay="600" draggable="false" />
+          </div>
+          <div style="opacity: 0.3; margin-left: -100px">
+            <img :src="marina" alt="canva" width="280" data-aos="fade-right" data-aos-delay="200" draggable="false" />
+          </div>
         </div>
       </div>
     </div>
@@ -74,25 +89,18 @@ export default {
       this.isHover = isHover;
     },
     findArtist() {
-      const artistName = this.artistName;
+      const artistName = this.artistName.trim();
       if (!artistName) {
         this.messages = "Por favor, insira o nome do seu artista.";
         return;
       }
 
       axios
-        .get(
-          // https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q=
-          //
-          `${this.$apiBaseURL}/api/artists?q=${encodeURIComponent(
-            artistName
-          )}`
-        )
+        .get(`${this.$apiBaseURL}/api/artists?q=${encodeURIComponent(artistName)}`)
         .then((response) => {
           const artist = response.data.data[0];
           if (!artist) {
-            this.messages =
-              "Nenhum artista encontrado com esse nome.";
+            this.messages = "Nenhum artista encontrado com esse nome.";
             return;
           }
 
@@ -102,12 +110,9 @@ export default {
             icon: artist.picture_big,
           };
 
-          this.$nextTick(() => {
-            AOS.refresh();
-          });
+          this.$nextTick(() => AOS.refresh());
         })
-        .catch((error) => {
-          console.error("Erro ao buscar os dados:", error);
+        .catch(() => {
           this.messages = "Ocorreu um erro ao buscar os dados.";
         });
     },
@@ -116,7 +121,6 @@ export default {
     },
     handleAnimationEnd() {
       if (this.isFadingOut) {
-        // Zera os dados do artista após a animação de fade-out
         this.artist = null;
         this.isFadingOut = false;
         this.artistName = "";
@@ -126,13 +130,8 @@ export default {
     },
     async getArtistData() {
       try {
-        // Redireciona para a rota '/songs' e passa os dados diretamente como state
-        this.$router.push({
-          name: "selectSongs",
-        });
-
-        const artistData = { ...this.artist }; // Cria uma cópia do objeto
-        localStorage.setItem("artistData", JSON.stringify(artistData));
+        this.$router.push({ name: "selectSongs" });
+        localStorage.setItem("artistData", JSON.stringify(this.artist));
       } catch (error) {
         console.error("Erro ao buscar dados do artista:", error);
       }
@@ -144,29 +143,38 @@ export default {
 <style scoped>
 main.homepage {
   display: flex;
-  width: 100vw;
+  flex-wrap: wrap;
+  gap: 4rem;
+  width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
+  background-color: var(--black);
+  color: var(--white);
 }
 
 main.homepage > div {
-  width: 50%;
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.home > div {
-  max-width: 400px;
-  width: 100%;
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-bottom: 0.5rem;
 }
 
@@ -176,6 +184,7 @@ main.homepage > div {
 
 form {
   margin-top: 1.6rem;
+  width: 100%;
 }
 
 form h2 {
@@ -187,6 +196,16 @@ form h2 {
   color: var(--lightgrey);
 }
 
+form input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 0.8rem;
+  background: var(--darkgrey);
+  color: var(--white);
+}
+
 main.homepage div.artist-box {
   display: flex;
   flex-direction: column;
@@ -194,41 +213,38 @@ main.homepage div.artist-box {
   align-items: center;
 }
 
-main.homepage div.artist-box h2.artist-name {
+.artist-name {
   font-size: 1.8rem;
-  margin-bottom: 0.5rem;
+  margin: 1rem 0 0.5rem 0;
   font-weight: 800;
   color: var(--primary);
   text-align: center;
 }
 
-main.homepage div.artist-box div.buttons {
+.artist-box .buttons {
   width: 100%;
   display: flex;
   gap: 0.5rem;
   margin-top: 1rem;
-  flex-direction: row;
   justify-content: space-evenly;
 }
 
-main.homepage div.artist-box div.buttons button {
+.artist-box .buttons button {
   width: 50%;
 }
 
-main.homepage div.artist-box div.disk {
-  margin-bottom: 1rem;
-}
-
 .disk {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   background-size: cover;
+  background-position: center;
   clip-path: circle(50% at center);
   position: relative;
+  transition: transform 0.3s ease;
 }
 
 .spin {
-  animation: spin 10s forwards ease-in-out;
+  animation: spin 10s linear infinite;
 }
 
 .hole {
@@ -246,7 +262,6 @@ main.homepage div.artist-box div.disk {
 .hole-m {
   width: 28px;
   height: 28px;
-  background-color: var(--black);
   opacity: 1;
 }
 
@@ -255,42 +270,57 @@ main.homepage div.artist-box div.disk {
 }
 
 @keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-@media screen and (max-width: 768px) {
+.images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+.image-stack {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+}
+
+.image-stack img {
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1000px) {
   main.homepage {
     flex-direction: column;
-    gap: 8rem;
-    padding: 4rem 2rem;
+    gap: 4rem;
   }
 
-  main.homepage>div {
-    max-width: 100%;
+  .home {
     width: 100%;
+    padding: 4rem 2rem !important;
+  }
+
+  .disk {
+    width: 200px;
+    height: 200px;
+  }
+
+  .artist-name {
+    font-size: 1.4rem;
+  }
+
+  .images {
+    display: none !important;
   }
 }
 </style>
-
-84rem 2rem;
-  }
-
-  main.homepage>div {
-    max-width: 100%;
-    width: 100%;

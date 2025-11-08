@@ -26,8 +26,8 @@ p {
     --black: #0E131F;
     --white: #d9d9d9;
     --active: #362243;
-    --primary: #9A48D0;
-    --secondary: #802FB6;
+    --primary: #A78BFA;
+    --secondary: #752EF0;
     --shadow: 194, 68, 68;
     --lightgrey: #f5f5f5;
     --grey: #b0b0b0;
@@ -141,7 +141,7 @@ button.cta-btn:disabled:hover {
 
 /* Aplica a personalização da barra de rolagem */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
 }
 
 ::-webkit-scrollbar-track {
